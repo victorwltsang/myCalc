@@ -58,7 +58,7 @@
     // need fixing on the if search on modifier, "+" will always happen first
     function countModifiers(num) {
 
-        if (num.match(/[\+*-/%]/g) ) {
+        if (num.match(/\+|\-|\/|\*|%/g) ) {
             count++;
             console.log("Count is " + count);
 
@@ -92,9 +92,9 @@
 
     function addition() {
         var lastMod = numArray.pop();
-        // this join thing is causing the "." to not work
-        //mostly like .map, possible solution: remove .map, in reduce, make change item to 0 if nan
-        var temp = numArray.join("").replace(/[\+*-/%]/g, ",").split(",").map(Number);
+      
+        var temp = numArray.join("").replace(/\+|\-|\/|\*|%/g, ",").split(",").map(Number);
+        console.log("temp value is " + temp);
         var action = temp.reduce(function(sum, item) {
 
             console.log(parseFloat(sum) + "+" + parseFloat(item));
@@ -111,7 +111,7 @@
 
     function subtraction() {
         var lastMod = numArray.pop();
-        var temp = numArray.join("").replace(/[\+*-/%]/g, ",").split(",").map(Number);
+        var temp = numArray.join("").replace(/\+|\-|\/|\*|%/g, ",").split(",").map(Number);
         var action = temp.reduce(function(sum, item) {
 
             console.log(parseFloat(sum) + " - " + parseFloat(item));
@@ -128,7 +128,7 @@
 
     function multiplication() {
         var lastMod = numArray.pop();
-        var temp = numArray.join("").replace(/[\+*-/%]/g, ",").split(",").map(Number);
+        var temp = numArray.join("").replace(/\+|\-|\/|\*|%/g, ",").split(",").map(Number);
         var action = temp.reduce(function(sum, item) {
 
             console.log(parseFloat(sum) + " * " + parseFloat(item));
@@ -145,7 +145,7 @@
 
     function division() {
         var lastMod = numArray.pop();
-        var temp = numArray.join("").replace(/[\+*-/%]/g, ",").split(",").map(Number);
+        var temp = numArray.join("").replace(/\+|\-|\/|\*|%/g, ",").split(",").map(Number);
         var action = temp.reduce(function(sum, item) {
 
             console.log(parseFloat(sum) + " / " +parseFloat(item));
@@ -162,7 +162,7 @@
 
     function modulo() {
         var lastMod = numArray.pop();
-        var temp = numArray.join("").replace(/[\+*-/%]/g, ",").split(",").map(Number);
+        var temp = numArray.join("").replace(/\+|\-|\/|\*|%/g, ",").split(",").map(Number);
         var action = temp.reduce(function(sum, item) {
 
             console.log(parseFloat(sum) + " % " + parseFloat(item));
