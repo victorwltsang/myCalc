@@ -22,22 +22,35 @@
             result.html(numArray);
         }
 
+        if ($(this).text() == "+/-") {
+
+            numArray.unshift("-");
+            result.html(numArray);
+        }
+
         if ($(this).text() == "=") {
               numArray.push($(this).text());
             count = 2;
 
             countModifiers($(this).text());
             numArray.pop();
-            result.html(numArray);
+            if(numArray[0] == "0"){
+              numArray = [];
+              result.html("0");
+            }else{
+                result.html(numArray);
+            }
+
             console.log("Count is " + count);
         }
 
-        if ($(this).text() !== "CE" && $(this).text() !== "AC" && $(this).text() !== "=") {
-            console.log("i dont want ac "+ $(this).text());
+        if ($(this).text() !== "CE" && $(this).text() !== "AC" && $(this).text() !== "=" && $(this).text() !== "+/-") {
+
             numArray.push($(this).text());
             countModifiers($(this).text());
             result.html(numArray);
             console.log("Count is " + count);
+            console.log(numArray);
         }
 
     });
@@ -79,6 +92,7 @@
 
     function addition() {
         var lastMod = numArray.pop();
+        // this join thing is causing the "." to not work
         var temp = numArray.join("").replace(/[\+*-/%]/g, ",").split(",").map(Number);
         var action = temp.reduce(function(sum, item) {
 
