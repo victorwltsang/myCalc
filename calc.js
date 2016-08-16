@@ -107,15 +107,27 @@ function countModifiers(num) {
 
 }
 
+/*
+
+var lastMod = numArray.pop();
+var neg = numArray.shift();
+console.log("neg: " + neg);
+var temp = numArray.join("").replace(/\+|\-|\/|\*|%/g, ",").split(",").map(Number);
+console.log("temp[0]" + temp[0]);
+console.log("temp " + temp);
+
+temp[0] = neg + temp[0];
+*/
+
 
 function addition() {
     var lastMod = numArray.pop();
-    var neg = numArray.shift();
-    console.log("neg: " + neg);
     var temp = numArray.join("").replace(/\+|\-|\/|\*|%/g, ",").split(",").map(Number);
 
-    temp[0] = neg + temp[0];
-
+    if(temp[0] === 0){
+      temp.shift();
+      temp[0] = "-" + temp[0];
+    }
 
     console.log("temp value is " + temp);
     var action = temp.reduce(function(sum, item) {
@@ -133,12 +145,12 @@ function addition() {
 }
 
 function subtraction() {
-    var lastMod = numArray.pop();
-    var neg = numArray.shift();
-    console.log("neg: " + neg);
-    var temp = numArray.join("").replace(/\+|\-|\/|\*|%/g, ",").split(",").map(Number);
-
-    temp[0] = neg + temp[0];
+  var lastMod = numArray.pop();
+  var temp = numArray.join("").replace(/\+|\-|\/|\*|%/g, ",").split(",").map(Number);
+  if(temp[0] === 0){
+    temp.shift();
+    temp[0] = "-" + temp[0];
+  }
 
 
     console.log("temp value is " + temp);
@@ -157,13 +169,12 @@ function subtraction() {
 }
 
 function multiplication() {
-    var lastMod = numArray.pop();
-    var neg = numArray.shift();
-    console.log("neg: " + neg);
-    var temp = numArray.join("").replace(/\+|\-|\/|\*|%/g, ",").split(",").map(Number);
-
-    temp[0] = neg + temp[0];
-
+  var lastMod = numArray.pop();
+  var temp = numArray.join("").replace(/\+|\-|\/|\*|%/g, ",").split(",").map(Number);
+  if(temp[0] === 0){
+    temp.shift();
+    temp[0] = "-" + temp[0];
+  }
 
     console.log("temp value is " + temp);
     var action = temp.reduce(function(sum, item) {
@@ -181,12 +192,12 @@ function multiplication() {
 }
 
 function division() {
-    var lastMod = numArray.pop();
-    var neg = numArray.shift();
-    console.log("neg: " + neg);
-    var temp = numArray.join("").replace(/\+|\-|\/|\*|%/g, ",").split(",").map(Number);
-
-    temp[0] = neg + temp[0];
+  var lastMod = numArray.pop();
+  var temp = numArray.join("").replace(/\+|\-|\/|\*|%/g, ",").split(",").map(Number);
+  if(temp[0] === 0){
+    temp.shift();
+    temp[0] = "-" + temp[0];
+  }
 
 
     console.log("temp value is " + temp);
@@ -205,12 +216,13 @@ function division() {
 }
 
 function modulo() {
-    var lastMod = numArray.pop();
-    var neg = numArray.shift();
-    console.log("neg: " + neg);
-    var temp = numArray.join("").replace(/\+|\-|\/|\*|%/g, ",").split(",").map(Number);
+  var lastMod = numArray.pop();
+  var temp = numArray.join("").replace(/\+|\-|\/|\*|%/g, ",").split(",").map(Number);
+  if(temp[0] === 0){
+    temp.shift();
+    temp[0] = "-" + temp[0];
+  }
 
-    temp[0] = neg + temp[0];
 
 
     console.log("temp value is " + temp);
