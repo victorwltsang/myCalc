@@ -1,0 +1,42 @@
+.container {
+    width: 500px;
+    height: auto;
+    margin-top: 50px;
+    padding: 0;
+    background: linear-gradient(#006586, #6B5E8F);
+    color: white;
+}
+
+.row {
+    padding: 0;
+    margin: 0;
+}
+
+.calcBtn {
+    width: 100%;
+    background-color: Transparent;
+    border: 1px solid rgba(200, 200, 200, 0.35);
+    padding: 0;
+    height: 100px;
+    font-size: 200%;
+}
+
+.calcBtn:hover {
+    background: rgba(240, 240, 240, 0.3);
+    font-size: 215%;
+}
+
+.nopad {
+    padding: 0;
+    margin: 0;
+}
+
+#result {
+    height: 150px;
+    font-size: 350%;
+    text-align: right;
+    padding-right: 50px;
+    padding-left: 50px;
+    padding-top: 20px;
+    word-wrap: break-word;
+}
