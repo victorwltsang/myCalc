@@ -93,6 +93,7 @@
     function addition() {
         var lastMod = numArray.pop();
         // this join thing is causing the "." to not work
+        //mostly like .map, possible solution: remove .map, in reduce, make change item to 0 if nan
         var temp = numArray.join("").replace(/[\+*-/%]/g, ",").split(",").map(Number);
         var action = temp.reduce(function(sum, item) {
 
