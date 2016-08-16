@@ -1,6 +1,7 @@
 var numArray = [];
 var count = 0;
 var result = $("#result");
+var modCount = [];
 $(document).ready(function() {
 
     result.html("0");
@@ -14,6 +15,7 @@ $(".calcBtn").on("click", function() {
 
         numArray = [];
         count = 0;
+        modCount = [];
         result.html("0");
     }
     if ($(this).text() == "CE") {
@@ -23,6 +25,7 @@ $(".calcBtn").on("click", function() {
     }
 
     if ($(this).text() == "+/-") {
+      console.log(numArray);
 
         if (numArray[0].match(/\-/)) {
             var pos = numArray.shift();
@@ -52,6 +55,8 @@ $(".calcBtn").on("click", function() {
 
         countModifiers($(this).text());
         numArray.pop();
+        modCount = [];
+        count = 0;
         if (numArray[0] == "0") {
             numArray = [];
             result.html("0");
@@ -79,31 +84,62 @@ function countModifiers(num) {
     if (num.match(/\+|\-|\/|\*|%/g)) {
         count++;
         console.log("Count is " + count);
+        modCount.push(num);
+        console.log("First Mod " + modCount);
 
     }
+    //
+    // if (count === 2) {
+    //     count = 1;
+    //     console.log(numArray);
+    //
+    //
+    //     if (numArray.join("").match(/\+/)) {
+    //         console.log("Match first +");
+    //         addition();
+    //     } else if (numArray.join("").match(/\-/)) {
+    //         console.log("Match first -");
+    //         subtraction();
+    //     } else if (numArray.join("").match(/\*/)) {
+    //         console.log("Match first *");
+    //         multiplication();
+    //     } else if (numArray.join("").match(/\//)) {
+    //         console.log("Match first /");
+    //         division();
+    //     } else if (numArray.join("").match(/%/)) {
+    //         console.log("Match first %");
+    //         modulo();
+    //     }
+    //
+    //
+    // }
 
-    if (count === 2) {
+    if (count >= 2) {
         count = 1;
         console.log(numArray);
-        if (numArray.join("").match(/\+/)) {
+
+        var whichMod = modCount.shift();
+
+        if (whichMod === "+") {
             console.log("Match first +");
             addition();
-        } else if (numArray.join("").match(/\-/)) {
+        } else if (whichMod === "-") {
             console.log("Match first -");
             subtraction();
-        } else if (numArray.join("").match(/\*/)) {
+        } else if (whichMod === "*") {
             console.log("Match first *");
             multiplication();
-        } else if (numArray.join("").match(/\//)) {
+        } else if (whichMod === "/") {
             console.log("Match first /");
             division();
-        } else if (numArray.join("").match(/%/)) {
+        } else if (whichMod === "%") {
             console.log("Match first %");
             modulo();
         }
 
 
     }
+
 
 }
 
@@ -204,7 +240,7 @@ function division() {
     var action = temp.reduce(function(sum, item) {
 
         console.log(parseFloat(sum) + " / " + parseFloat(item));
-        return parseFloat(sum) / parseFloat(item);
+        return (parseFloat(sum) / parseFloat(item)).toFixed(2);
 
     });
     console.log(action);
