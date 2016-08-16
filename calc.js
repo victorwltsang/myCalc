@@ -1,178 +1,229 @@
+var numArray = [];
+var count = 0;
+var result = $("#result");
+$(document).ready(function() {
 
-    var numArray = [];
-    var count = 0;
-    var result = $("#result");
-    $(document).ready(function() {
+    result.html("0");
 
+});
+
+$(".calcBtn").on("click", function() {
+    console.log($(this).text());
+
+    if ($(this).text() == "AC") {
+
+        numArray = [];
+        count = 0;
         result.html("0");
+    }
+    if ($(this).text() == "CE") {
 
-    });
+        numArray.pop();
+        result.html(numArray);
+    }
 
-    $(".calcBtn").on("click", function() {
-        console.log($(this).text());
+    if ($(this).text() == "+/-") {
 
-        if ($(this).text() == "AC") {
+        if (numArray[0].match(/\-/)) {
+            var pos = numArray.shift();
 
+            console.log("this pos " + pos);
+            pos = pos.substring(1);
+            console.log("new pos " + pos);
+
+            numArray.unshift(pos);
+        } else {
+            var first = numArray.shift();
+            first = "-" + first;
+            console.log(first);
+
+            numArray.unshift(first);
+        }
+
+
+        count = 0;
+        result.html(numArray);
+        console.log(numArray);
+    }
+
+    if ($(this).text() == "=") {
+        numArray.push($(this).text());
+        count = 2;
+
+        countModifiers($(this).text());
+        numArray.pop();
+        if (numArray[0] == "0") {
             numArray = [];
             result.html("0");
-        }
-        if ($(this).text() == "CE") {
-
-            numArray.pop();
+        } else {
             result.html(numArray);
         }
 
-        if ($(this).text() == "+/-") {
+        console.log("Count is " + count);
+    }
 
-            numArray.unshift("-");
-            result.html(numArray);
+    if ($(this).text() !== "CE" && $(this).text() !== "AC" && $(this).text() !== "=" && $(this).text() !== "+/-") {
+
+        numArray.push($(this).text());
+        countModifiers($(this).text());
+        result.html(numArray);
+        console.log("Count is " + count);
+        console.log(numArray);
+    }
+
+});
+
+// need fixing on the if search on modifier, "+" will always happen first
+function countModifiers(num) {
+
+    if (num.match(/\+|\-|\/|\*|%/g)) {
+        count++;
+        console.log("Count is " + count);
+
+    }
+
+    if (count === 2) {
+        count = 1;
+        console.log(numArray);
+        if (numArray.join("").match(/\+/)) {
+            console.log("Match first +");
+            addition();
+        } else if (numArray.join("").match(/\-/)) {
+            console.log("Match first -");
+            subtraction();
+        } else if (numArray.join("").match(/\*/)) {
+            console.log("Match first *");
+            multiplication();
+        } else if (numArray.join("").match(/\//)) {
+            console.log("Match first /");
+            division();
+        } else if (numArray.join("").match(/%/)) {
+            console.log("Match first %");
+            modulo();
         }
 
-        if ($(this).text() == "=") {
-              numArray.push($(this).text());
-            count = 2;
 
-            countModifiers($(this).text());
-            numArray.pop();
-            if(numArray[0] == "0"){
-              numArray = [];
-              result.html("0");
-            }else{
-                result.html(numArray);
-            }
+    }
 
-            console.log("Count is " + count);
-        }
+}
 
-        if ($(this).text() !== "CE" && $(this).text() !== "AC" && $(this).text() !== "=" && $(this).text() !== "+/-") {
 
-            numArray.push($(this).text());
-            countModifiers($(this).text());
-            result.html(numArray);
-            console.log("Count is " + count);
-            console.log(numArray);
-        }
+function addition() {
+    var lastMod = numArray.pop();
+    var neg = numArray.shift();
+    console.log("neg: " + neg);
+    var temp = numArray.join("").replace(/\+|\-|\/|\*|%/g, ",").split(",").map(Number);
+
+    temp[0] = neg + temp[0];
+
+
+    console.log("temp value is " + temp);
+    var action = temp.reduce(function(sum, item) {
+
+        console.log(parseFloat(sum) + "+" + parseFloat(item));
+        return parseFloat(sum) + parseFloat(item);
 
     });
+    console.log(action);
 
-    // need fixing on the if search on modifier, "+" will always happen first
-    function countModifiers(num) {
+    numArray = [];
+    numArray.push(action);
+    numArray.push(lastMod);
+    result.html(numArray);
+}
 
-        if (num.match(/\+|\-|\/|\*|%/g) ) {
-            count++;
-            console.log("Count is " + count);
+function subtraction() {
+    var lastMod = numArray.pop();
+    var neg = numArray.shift();
+    console.log("neg: " + neg);
+    var temp = numArray.join("").replace(/\+|\-|\/|\*|%/g, ",").split(",").map(Number);
 
-        }
-
-        if (count === 2) {
-            count = 1;
-            console.log(numArray);
-            if (numArray.join("").match(/\+/)) {
-                console.log("Match first +");
-                addition();
-            }else if (numArray.join("").match(/\-/)) {
-                console.log("Match first -");
-                subtraction();
-            }
-            else if (numArray.join("").match(/\*/)) {
-                console.log("Match first *");
-                multiplication();
-            }else if (numArray.join("").match(/\//)) {
-                console.log("Match first /");
-                division();
-            }else if (numArray.join("").match(/%/)) {
-                console.log("Match first %");
-                modulo();
-            }
+    temp[0] = neg + temp[0];
 
 
-        }
+    console.log("temp value is " + temp);
+    var action = temp.reduce(function(sum, item) {
 
-    }
+        console.log(parseFloat(sum) + " - " + parseFloat(item));
+        return parseFloat(sum) - parseFloat(item);
 
-    function addition() {
-        var lastMod = numArray.pop();
-      
-        var temp = numArray.join("").replace(/\+|\-|\/|\*|%/g, ",").split(",").map(Number);
-        console.log("temp value is " + temp);
-        var action = temp.reduce(function(sum, item) {
+    });
+    console.log(action);
 
-            console.log(parseFloat(sum) + "+" + parseFloat(item));
-            return parseFloat(sum) + parseFloat(item);
+    numArray = [];
+    numArray.push(action);
+    numArray.push(lastMod);
+    result.html(numArray);
+}
 
-        });
-        console.log(action);
+function multiplication() {
+    var lastMod = numArray.pop();
+    var neg = numArray.shift();
+    console.log("neg: " + neg);
+    var temp = numArray.join("").replace(/\+|\-|\/|\*|%/g, ",").split(",").map(Number);
 
-        numArray = [];
-        numArray.push(action);
-        numArray.push(lastMod);
-        result.html(numArray);
-    }
+    temp[0] = neg + temp[0];
 
-    function subtraction() {
-        var lastMod = numArray.pop();
-        var temp = numArray.join("").replace(/\+|\-|\/|\*|%/g, ",").split(",").map(Number);
-        var action = temp.reduce(function(sum, item) {
 
-            console.log(parseFloat(sum) + " - " + parseFloat(item));
-            return parseFloat(sum) - parseFloat(item);
+    console.log("temp value is " + temp);
+    var action = temp.reduce(function(sum, item) {
 
-        });
-        console.log(action);
+        console.log(parseFloat(sum) + " * " + parseFloat(item));
+        return parseFloat(sum) * parseFloat(item);
 
-        numArray = [];
-        numArray.push(action);
-        numArray.push(lastMod);
-        result.html(numArray);
-    }
+    });
+    console.log(action);
 
-    function multiplication() {
-        var lastMod = numArray.pop();
-        var temp = numArray.join("").replace(/\+|\-|\/|\*|%/g, ",").split(",").map(Number);
-        var action = temp.reduce(function(sum, item) {
+    numArray = [];
+    numArray.push(action);
+    numArray.push(lastMod);
+    result.html(numArray);
+}
 
-            console.log(parseFloat(sum) + " * " + parseFloat(item));
-            return parseFloat(sum) * parseFloat(item);
+function division() {
+    var lastMod = numArray.pop();
+    var neg = numArray.shift();
+    console.log("neg: " + neg);
+    var temp = numArray.join("").replace(/\+|\-|\/|\*|%/g, ",").split(",").map(Number);
 
-        });
-        console.log(action);
+    temp[0] = neg + temp[0];
 
-        numArray = [];
-        numArray.push(action);
-        numArray.push(lastMod);
-        result.html(numArray);
-    }
 
-    function division() {
-        var lastMod = numArray.pop();
-        var temp = numArray.join("").replace(/\+|\-|\/|\*|%/g, ",").split(",").map(Number);
-        var action = temp.reduce(function(sum, item) {
+    console.log("temp value is " + temp);
+    var action = temp.reduce(function(sum, item) {
 
-            console.log(parseFloat(sum) + " / " +parseFloat(item));
-            return (parseFloat(sum) / parseFloat(item)).toFixed(10);
+        console.log(parseFloat(sum) + " / " + parseFloat(item));
+        return parseFloat(sum) / parseFloat(item);
 
-        });
-        console.log(action);
+    });
+    console.log(action);
 
-        numArray = [];
-        numArray.push(action);
-        numArray.push(lastMod);
-        result.html(numArray);
-    }
+    numArray = [];
+    numArray.push(action);
+    numArray.push(lastMod);
+    result.html(numArray);
+}
 
-    function modulo() {
-        var lastMod = numArray.pop();
-        var temp = numArray.join("").replace(/\+|\-|\/|\*|%/g, ",").split(",").map(Number);
-        var action = temp.reduce(function(sum, item) {
+function modulo() {
+    var lastMod = numArray.pop();
+    var neg = numArray.shift();
+    console.log("neg: " + neg);
+    var temp = numArray.join("").replace(/\+|\-|\/|\*|%/g, ",").split(",").map(Number);
 
-            console.log(parseFloat(sum) + " % " + parseFloat(item));
-            return parseFloat(sum) % parseFloat(item);
+    temp[0] = neg + temp[0];
 
-        });
-        console.log(action);
 
-        numArray = [];
-        numArray.push(action);
-        numArray.push(lastMod);
-        result.html(numArray);
-    }
+    console.log("temp value is " + temp);
+    var action = temp.reduce(function(sum, item) {
+
+        console.log(parseFloat(sum) + " % " + parseFloat(item));
+        return parseFloat(sum) % parseFloat(item);
+
+    });
+    console.log(action);
+
+    numArray = [];
+    numArray.push(action);
+    numArray.push(lastMod);
+    result.html(numArray);
+}
