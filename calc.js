@@ -216,7 +216,7 @@ function multiplication() {
     var action = temp.reduce(function(sum, item) {
 
         console.log(parseFloat(sum) + " * " + parseFloat(item));
-        return parseFloat(sum) * parseFloat(item);
+        return (parseFloat(sum) * parseFloat(item)).toPrecision(8);
 
     });
     console.log(action);
@@ -240,7 +240,7 @@ function division() {
     var action = temp.reduce(function(sum, item) {
 
         console.log(parseFloat(sum) + " / " + parseFloat(item));
-        return (parseFloat(sum) / parseFloat(item)).toFixed(2);
+        return (parseFloat(sum) / parseFloat(item)).toPrecision(8);
 
     });
     console.log(action);
