@@ -171,7 +171,7 @@ function addition() {
         console.log(parseFloat(sum) + "+" + parseFloat(item));
         return parseFloat(sum) + parseFloat(item);
 
-    });
+    }).toString();
     console.log(action);
 
     numArray = [];
@@ -195,7 +195,7 @@ function subtraction() {
         console.log(parseFloat(sum) + " - " + parseFloat(item));
         return parseFloat(sum) - parseFloat(item);
 
-    });
+    }).toString();
     console.log(action);
 
     numArray = [];
@@ -218,7 +218,7 @@ function multiplication() {
         console.log(parseFloat(sum) + " * " + parseFloat(item));
         return parseFloat(sum) * parseFloat(item);
 
-    });
+    }).toString();
     console.log(action);
 
     numArray = [];
@@ -242,7 +242,7 @@ function division() {
         console.log(parseFloat(sum) + " / " + parseFloat(item));
         return parseFloat(sum) / parseFloat(item);
 
-    });
+    }).toString();
     console.log(action);
 
     numArray = [];
@@ -267,7 +267,7 @@ function modulo() {
         console.log(parseFloat(sum) + " % " + parseFloat(item));
         return parseFloat(sum) % parseFloat(item);
 
-    });
+    }).toString();
     console.log(action);
 
     numArray = [];
